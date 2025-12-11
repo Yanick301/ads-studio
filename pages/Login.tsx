@@ -29,8 +29,8 @@ export const Login: React.FC<LoginProps> = ({ onSuccess, isRedirected }) => {
   };
 
   return (
-    <div className="min-h-screen bg-midnight-950 flex overflow-hidden">
-      {/* Left: Cinematic Visual */}
+    <div className="min-h-screen bg-midnight-950 flex flex-col lg:flex-row overflow-hidden">
+      {/* Left: Cinematic Visual (Hidden on Mobile) */}
       <div className="hidden lg:flex w-1/2 relative overflow-hidden bg-midnight-900 items-center justify-center">
         <div className="absolute inset-0 z-0">
            <div className="absolute inset-0 bg-midnight-950/60 z-10"></div>
@@ -38,7 +38,6 @@ export const Login: React.FC<LoginProps> = ({ onSuccess, isRedirected }) => {
              autoPlay loop muted playsInline 
              className="w-full h-full object-cover opacity-60 mix-blend-screen"
            >
-              {/* Sci-Fi Tunnel Video */}
               <source src="https://player.vimeo.com/external/370259942.sd.mp4?s=d7e3549d40b955700832279f60046648873752e5&profile_id=164&oauth2_token_id=57447761" type="video/mp4" />
            </video>
         </div>
@@ -56,26 +55,26 @@ export const Login: React.FC<LoginProps> = ({ onSuccess, isRedirected }) => {
         </div>
       </div>
 
-      {/* Right: Glass Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-16 relative bg-midnight-950">
+      {/* Right: Form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 md:p-8 lg:p-16 relative bg-midnight-950 h-screen lg:h-auto overflow-y-auto">
          <div className="bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] absolute inset-0 opacity-5 pointer-events-none"></div>
          
-         <div className="w-full max-w-md animate-fade-in-up p-8 rounded-3xl bg-white/5 border border-white/5 backdrop-blur-2xl shadow-2xl relative">
+         <div className="w-full max-w-md animate-fade-in-up p-8 rounded-3xl bg-white/5 border border-white/5 backdrop-blur-2xl shadow-2xl relative mt-10 lg:mt-0">
             
             {/* Restricted Access Alert */}
             {isRedirected && (
-               <div className="absolute -top-16 left-0 w-full animate-fade-in-up">
+               <div className="absolute -top-20 left-0 w-full animate-fade-in-up">
                   <div className="bg-red-500/10 border border-red-500/50 rounded-xl p-4 flex items-center gap-4 text-red-200 shadow-[0_0_30px_rgba(239,68,68,0.2)] backdrop-blur-md">
-                     <div className="p-2 bg-red-500 rounded-full text-white"><Lock size={16}/></div>
+                     <div className="p-2 bg-red-500 rounded-full text-white shrink-0"><Lock size={16}/></div>
                      <div>
                         <p className="text-xs font-bold uppercase tracking-wider text-red-400">Restricted Access</p>
-                        <p className="text-xs">You must authenticate to access this sector.</p>
+                        <p className="text-xs">Authentication required to access campaign tools.</p>
                      </div>
                   </div>
                </div>
             )}
 
-            <div className="mb-12">
+            <div className="mb-8 lg:mb-12">
                <h2 className="text-3xl font-bold text-white mb-2 tracking-tight">
                  {isRegistering ? 'Initialize Account' : 'Secure Login'}
                </h2>
@@ -84,7 +83,7 @@ export const Login: React.FC<LoginProps> = ({ onSuccess, isRedirected }) => {
                </p>
             </div>
 
-            <div className="flex gap-4 mb-8 p-1 bg-midnight-900/50 rounded-lg border border-white/10">
+            <div className="flex gap-2 mb-8 p-1 bg-midnight-900/50 rounded-lg border border-white/10">
                {['BRAND', 'INFLUENCER', 'ADMIN'].map((r) => (
                   <button
                     key={r}

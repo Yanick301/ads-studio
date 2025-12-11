@@ -103,8 +103,6 @@ export const CreateCampaign: React.FC<Props> = ({ onSuccess }) => {
 
   // Styles
   const sectionTitle = "text-[10px] font-bold text-cyan-400 uppercase tracking-[0.2em] mb-8 flex items-center gap-2 border-b border-white/5 pb-2 opacity-80";
-  
-  // Floating Label Input Styles - REFINED
   const inputGroupClass = "relative z-0 w-full group mb-10";
   const inputClass = "block py-3 px-0 w-full text-base text-white bg-transparent border-0 border-b border-white/10 appearance-none focus:outline-none focus:ring-0 focus:border-cyan-400 peer transition-all duration-300 font-light tracking-wide focus:text-cyan-50 placeholder-transparent rounded-none";
   const labelClass = "peer-focus:font-bold peer-focus:tracking-[0.2em] absolute text-xs text-neutral-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-cyan-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:font-normal peer-focus:scale-75 peer-focus:-translate-y-6 uppercase tracking-wider";
@@ -112,14 +110,13 @@ export const CreateCampaign: React.FC<Props> = ({ onSuccess }) => {
   return (
     <div className="min-h-screen pt-24 pb-24 relative overflow-hidden">
       
-      {/* Background Video for Cockpit Feel */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
+      {/* Background Video */}
+      <div className="absolute inset-0 z-0 pointer-events-none fixed">
          <div className="absolute inset-0 bg-black/70 z-10"></div>
          <video 
            autoPlay loop muted playsInline 
            className="w-full h-full object-cover opacity-40 mix-blend-luminosity"
          >
-            {/* City Lights / Traffic Video */}
             <source src="https://player.vimeo.com/external/394677737.sd.mp4?s=1d577a76059952002779f678201a43a0d33e9b88&profile_id=164&oauth2_token_id=57447761" type="video/mp4" />
          </video>
       </div>
@@ -136,7 +133,7 @@ export const CreateCampaign: React.FC<Props> = ({ onSuccess }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-24">
           
           {/* LEFT: FORM INTERFACE */}
-          <div className="lg:col-span-8 animate-fade-in-up">
+          <div className="lg:col-span-8 animate-fade-in-up order-1">
              
              {/* Header */}
              <div className="mb-10 md:mb-16 border-l-4 border-cyan-500 pl-4 md:pl-8 relative backdrop-blur-sm group">
@@ -281,7 +278,7 @@ export const CreateCampaign: React.FC<Props> = ({ onSuccess }) => {
                     </div>
                  </section>
 
-                 {/* 4. Payload (Image & Video) */}
+                 {/* 4. Payload */}
                  <section>
                     <div className={sectionTitle}><Upload size={12}/> {t('create.section_payload')}</div>
                     <div 
@@ -355,6 +352,7 @@ export const CreateCampaign: React.FC<Props> = ({ onSuccess }) => {
                </form>
              ) : (
                <div className="animate-fade-in space-y-8 p-6 md:p-10 rounded-3xl bg-midnight-900/60 border border-white/10 backdrop-blur-xl shadow-2xl">
+                  {/* Payment Step content - unchanged structure but inside responsive container */}
                   <button onClick={() => setStep(1)} className="text-xs font-bold text-cyan-500 uppercase tracking-widest hover:text-white flex items-center gap-2 mb-8 transition-colors group">
                      <ChevronRight className="rotate-180 group-hover:-translate-x-1 transition-transform" size={14}/> {t('create.modify')}
                   </button>
@@ -417,8 +415,8 @@ export const CreateCampaign: React.FC<Props> = ({ onSuccess }) => {
              )}
           </div>
 
-          {/* RIGHT: LIVE SUMMARY (HUD) */}
-          <div className="lg:col-span-4 relative mt-8 lg:mt-0">
+          {/* RIGHT: LIVE SUMMARY (HUD) - Stacks below form on mobile */}
+          <div className="lg:col-span-4 relative mt-8 lg:mt-0 order-2">
              <div className="lg:sticky lg:top-32">
                 <div className="bg-midnight-950/80 border border-white/10 p-6 md:p-10 shadow-2xl relative overflow-hidden group rounded-3xl backdrop-blur-2xl">
                    {/* HUD Decor elements */}

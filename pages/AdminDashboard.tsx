@@ -311,7 +311,7 @@ export const AdminDashboard: React.FC = () => {
                   </div>
                </div>
 
-               {/* TABLE */}
+               {/* TABLE WRAPPER FOR SCROLL */}
                <div className="overflow-x-auto">
                   <table className="w-full text-left border-collapse min-w-[800px]">
                      <thead>

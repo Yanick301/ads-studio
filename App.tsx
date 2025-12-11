@@ -31,8 +31,7 @@ const AppContent: React.FC = () => {
   }
 
   const handleNavigate = (page: string) => {
-    // STRICT ROUTE PROTECTION
-    // If user tries to access restricted pages without auth, redirect to login
+    // STRICT ROUTE PROTECTION / LOGIN WALL
     const protectedRoutes = ['create', 'admin', 'brand'];
     
     if (protectedRoutes.includes(page) && !isAuthenticated) {
@@ -61,11 +60,12 @@ const AppContent: React.FC = () => {
       case 'home':
         return <Home onNavigate={handleNavigate} />;
       case 'create':
-        return <CreateCampaign onSuccess={() => handleNavigate('home')} />;
+        // Double check protection in render
+        return isAuthenticated ? <CreateCampaign onSuccess={() => handleNavigate('home')} /> : <Login onSuccess={handleLoginSuccess} isRedirected={true} />;
       case 'admin':
-        return user?.role === 'ADMIN' ? <AdminDashboard /> : <Home onNavigate={handleNavigate} />;
+        return isAuthenticated && user?.role === 'ADMIN' ? <AdminDashboard /> : <Login onSuccess={handleLoginSuccess} isRedirected={true} />;
       case 'brand':
-        return user?.role === 'BRAND' ? <BrandDashboard /> : <Home onNavigate={handleNavigate} />;
+        return isAuthenticated && user?.role === 'BRAND' ? <BrandDashboard /> : <Login onSuccess={handleLoginSuccess} isRedirected={true} />;
       case 'influencer':
         return <BecomeInfluencer />;
       case 'legal':
@@ -77,6 +77,9 @@ const AppContent: React.FC = () => {
     }
   };
 
+  // Specific check for login page to render without layout if needed, 
+  // but keeping it consistent is usually better. 
+  // Here we render Login full screen inside the switch or separately.
   if (currentPage === 'login') {
     return <Login onSuccess={handleLoginSuccess} isRedirected={!!redirectAfterLogin} />;
   }

@@ -145,7 +145,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             <span className="text-cyan-200 text-[10px] font-bold uppercase tracking-[0.2em]">{t('hero.new')}</span>
           </div>
           
-          <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black text-white tracking-tighter mb-8 leading-[0.9] md:leading-[0.85] animate-scale-in drop-shadow-2xl">
+          <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black text-white tracking-tighter mb-8 leading-[0.9] md:leading-[0.85] animate-scale-in drop-shadow-2xl">
             {t('hero.title_start')} <br />
             <span className="font-black text-transparent bg-clip-text bg-gradient-to-r from-gold-400 via-white to-cyan-400 animate-shimmer bg-[length:200%_auto]">
               {t('hero.title_end')}
@@ -248,12 +248,12 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                     />
                  </div>
 
-                 <button onClick={() => onNavigate('create')} className="bg-gold-500 text-black px-8 py-4 font-bold uppercase tracking-widest rounded hover:bg-gold-400 transition-colors">
+                 <button onClick={() => onNavigate('create')} className="bg-gold-500 text-black px-8 py-4 font-bold uppercase tracking-widest rounded hover:bg-gold-400 transition-colors w-full md:w-auto">
                     {t('pricing.choose')}
                  </button>
               </div>
 
-              <div className="bg-midnight-900/80 border border-white/10 rounded-3xl p-8 backdrop-blur-xl relative shadow-2xl">
+              <div className="bg-midnight-900/80 border border-white/10 rounded-3xl p-8 backdrop-blur-xl relative shadow-2xl mt-8 lg:mt-0">
                  <div className="absolute top-4 right-4 text-cyan-500/20"><Calculator size={100}/></div>
                  
                  <div className="space-y-8 relative z-10">
@@ -285,7 +285,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             </div>
 
             <div className="flex flex-col md:flex-row gap-8">
-               <div className="flex md:flex-col gap-4 overflow-x-auto pb-4 md:pb-0 md:w-1/4">
+               <div className="flex md:flex-col gap-4 overflow-x-auto pb-4 md:pb-0 md:w-1/4 no-scrollbar">
                   {['Burger King', 'Canal+', 'MTN'].map((brand, i) => (
                      <button 
                         key={i}
@@ -305,13 +305,13 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                      <div className="animate-fade-in w-full">
                         <div className="text-gold-500 font-mono text-xs uppercase mb-4">CONFIDENTIAL REPORT #BK-229</div>
                         <h3 className="text-4xl font-black text-white mb-6">{t('cases.bk_title')}</h3>
-                        <div className="grid grid-cols-2 gap-8 mb-8">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
                            <div>
-                              <div className="text-6xl font-thin text-cyan-400 mb-2">340%</div>
+                              <div className="text-5xl md:text-6xl font-thin text-cyan-400 mb-2">340%</div>
                               <div className="text-xs text-neutral-500 uppercase tracking-widest">Sales Uplift</div>
                            </div>
                            <div>
-                              <div className="text-6xl font-thin text-purple-400 mb-2">12k</div>
+                              <div className="text-5xl md:text-6xl font-thin text-purple-400 mb-2">12k</div>
                               <div className="text-xs text-neutral-500 uppercase tracking-widest">Shared Stories</div>
                            </div>
                         </div>
@@ -325,13 +325,13 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                      <div className="animate-fade-in w-full">
                         <div className="text-gold-500 font-mono text-xs uppercase mb-4">CONFIDENTIAL REPORT #CP-229</div>
                         <h3 className="text-4xl font-black text-white mb-6">{t('cases.c_title')}</h3>
-                        <div className="grid grid-cols-2 gap-8 mb-8">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
                            <div>
-                              <div className="text-6xl font-thin text-green-400 mb-2">1.5k</div>
+                              <div className="text-5xl md:text-6xl font-thin text-green-400 mb-2">1.5k</div>
                               <div className="text-xs text-neutral-500 uppercase tracking-widest">New Subs</div>
                            </div>
                            <div>
-                              <div className="text-6xl font-thin text-white mb-2">48h</div>
+                              <div className="text-5xl md:text-6xl font-thin text-white mb-2">48h</div>
                               <div className="text-xs text-neutral-500 uppercase tracking-widest">Campaign Duration</div>
                            </div>
                         </div>
@@ -342,13 +342,13 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                      <div className="animate-fade-in w-full">
                         <div className="text-gold-500 font-mono text-xs uppercase mb-4">CONFIDENTIAL REPORT #MTN-229</div>
                         <h3 className="text-4xl font-black text-white mb-6">{t('cases.mtn_title')}</h3>
-                        <div className="grid grid-cols-2 gap-8 mb-8">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
                            <div>
-                              <div className="text-6xl font-thin text-yellow-400 mb-2">12k+</div>
+                              <div className="text-5xl md:text-6xl font-thin text-yellow-400 mb-2">12k+</div>
                               <div className="text-xs text-neutral-500 uppercase tracking-widest">App Installs</div>
                            </div>
                            <div>
-                              <div className="text-6xl font-thin text-cyan-400 mb-2">0.05$</div>
+                              <div className="text-5xl md:text-6xl font-thin text-cyan-400 mb-2">0.05$</div>
                               <div className="text-xs text-neutral-500 uppercase tracking-widest">CPI (Cost Per Install)</div>
                            </div>
                         </div>
@@ -450,7 +450,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                <h3 className="text-2xl font-bold text-white mb-2 uppercase tracking-wide">{t('eco.title')}</h3>
                <p className="text-neutral-500 text-sm max-w-md mx-auto md:mx-0">{t('eco.subtitle')}</p>
             </div>
-            <div className="grid grid-cols-4 gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
                <div className="flex flex-col items-center gap-2"><Server size={32} className="text-white"/><span className="text-[10px] font-bold uppercase tracking-widest text-neutral-500">API</span></div>
                <div className="flex flex-col items-center gap-2"><Database size={32} className="text-green-500"/><span className="text-[10px] font-bold uppercase tracking-widest text-neutral-500">CRM</span></div>
                <div className="flex flex-col items-center gap-2"><LinkIcon size={32} className="text-blue-500"/><span className="text-[10px] font-bold uppercase tracking-widest text-neutral-500">Zapier</span></div>
@@ -465,7 +465,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
         <div className="max-w-[1400px] mx-auto px-6 relative z-10">
           <div className="mb-16 md:mb-32 flex flex-col md:flex-row items-start md:items-end justify-between">
             <div>
-              <h2 className="text-3xl md:text-7xl font-black text-white mb-6 tracking-tighter uppercase">The <span className="text-gold-500">System</span></h2>
+              <h2 className="text-4xl md:text-7xl font-black text-white mb-6 tracking-tighter uppercase">The <span className="text-gold-500">System</span></h2>
               <div className="w-24 h-1 bg-gradient-to-r from-gold-500 to-cyan-500"></div>
             </div>
             <p className="mt-6 md:mt-0 text-neutral-500 max-w-sm text-left md:text-right font-light">
