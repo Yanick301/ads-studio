@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kwik Influencer Ads | DeOS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              gold: {
+                50: '#FFFAEB',
+                100: '#FCEFC7',
+                200: '#F8E3A3',
+                300: '#F5D070',
+                400: '#F2C14E',
+                500: '#EAB308', // Primary Brand Color
+                600: '#CA8A04',
+                700: '#A16207',
+                800: '#854D0E',
+                900: '#713F12',
+              },
+              cyan: {
+                400: '#22d3ee',
+                500: '#06b6d4',
+                600: '#0891b2',
+              },
+              violet: {
+                500: '#8b5cf6',
+                900: '#4c1d95',
+              },
+              neutral: {
+                850: '#1f1f1f',
+                900: '#171717',
+                950: '#0a0a0a',
+              },
+              // New Deep Colors
+              midnight: {
+                950: '#020410', // New Base
+                900: '#050a1f',
+                800: '#0b122e',
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            },
+            animation: {
+              'float': 'float 8s ease-in-out infinite',
+              'float-delayed': 'float 8s ease-in-out 4s infinite',
+              'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'shimmer': 'shimmer 2.5s linear infinite',
+              'marquee': 'marquee 40s linear infinite',
+              'fade-in': 'fadeIn 0.6s ease-out forwards',
+              'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+              'scale-in': 'scaleIn 0.4s ease-out forwards',
+              'confetti': 'confetti 0.8s ease-out forwards',
+              'glow': 'glow 2s ease-in-out infinite alternate',
+              'scan': 'scan 3s linear infinite',
+              'spin-slow': 'spin 12s linear infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-20px)' },
+              },
+              shimmer: {
+                '0%': { backgroundPosition: '-1000px 0' },
+                '100%': { backgroundPosition: '1000px 0' },
+              },
+              marquee: {
+                '0%': { transform: 'translateX(0%)' },
+                '100%': { transform: 'translateX(-50%)' },
+              },
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              fadeInUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              scaleIn: {
+                 '0%': { opacity: '0', transform: 'scale(0.9)' },
+                 '100%': { opacity: '1', transform: 'scale(1)' },
+              },
+              confetti: {
+                '0%': { transform: 'scale(0.5)', opacity: '0' },
+                '50%': { transform: 'scale(1.1)', opacity: '1' },
+                '100%': { transform: 'scale(1)', opacity: '1' },
+              },
+              glow: {
+                '0%': { boxShadow: '0 0 5px rgba(234, 179, 8, 0.2)' },
+                '100%': { boxShadow: '0 0 20px rgba(234, 179, 8, 0.6), 0 0 10px rgba(6, 182, 212, 0.4)' }
+              },
+              scan: {
+                '0%': { transform: 'translateY(-100%)' },
+                '100%': { transform: 'translateY(100%)' }
+              }
+            },
+            backgroundImage: {
+              'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+              'tech-grid': "linear-gradient(to right, #ffffff05 1px, transparent 1px), linear-gradient(to bottom, #ffffff05 1px, transparent 1px)",
+              'cosmic-gradient': "linear-gradient(to bottom, #020410, #060818, #020410)",
+            }
+          },
+        },
+      };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      body { 
+        font-family: 'Inter', sans-serif; 
+        background-color: #020410; /* Deep Midnight Blue Base */
+        color: white; 
+        overflow-x: hidden;
+      }
+      
+      /* High-Tech Background Grid - Lighter on the blue bg */
+      .bg-grid-pattern {
+        background-size: 50px 50px;
+        background-image: linear-gradient(to right, rgba(100, 116, 139, 0.05) 1px, transparent 1px),
+                          linear-gradient(to bottom, rgba(100, 116, 139, 0.05) 1px, transparent 1px);
+        mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+        -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: #020410; }
+      ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+      ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+
+      /* Glassmorphism Utilities - Updated for Blue Tint */
+      .glass {
+        background: rgba(15, 23, 42, 0.3); /* Slate tint */
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      }
+      .glass-panel {
+        background: rgba(10, 15, 30, 0.6); /* Deep Blue tint */
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+      }
+      .glass-card-hover {
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      .glass-card-hover:hover {
+        background: rgba(30, 41, 59, 0.4);
+        border-color: rgba(6, 182, 212, 0.3); /* Cyan Glow */
+        box-shadow: 0 0 40px rgba(6, 182, 212, 0.1), inset 0 0 20px rgba(6, 182, 212, 0.05);
+        transform: translateY(-4px) scale(1.01);
+      }
+      
+      /* Cinematic Noise Overlay */
+      .bg-noise {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 50;
+        opacity: 0.04; /* Slightly more visible on blue */
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      }
+
+      /* Text Gradients */
+      .text-gradient-gold {
+        background: linear-gradient(to right, #fff, #EAB308, #fff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 200% auto;
+      }
+      
+      .text-gradient-cyan {
+        background: linear-gradient(to right, #22d3ee, #fff, #22d3ee);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      
+      .text-gradient-future {
+        background: linear-gradient(to right, #EAB308, #fff, #06b6d4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      
+      /* Scanline Effect */
+      .animate-scan {
+        animation: scan 3s linear infinite;
+        background: linear-gradient(to bottom, transparent, rgba(6, 182, 212, 0.5), transparent);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0",
+    "recharts": "https://aistudiocdn.com/recharts@^3.5.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/"
+  }
+}
+</script>
+</head>
+  <body>
+    <div class="bg-noise"></div>
+    <div id="root"></div>
+  </body>
+</html>
