@@ -27,7 +27,35 @@ const InfluencerSchema = new mongoose.Schema({
     campaignId: { type: mongoose.Schema.Types.ObjectId, ref: 'Campaign' },
     assignedAt: { type: Date, default: Date.now },
     earnings: { type: Number, default: 0 },
-    status: { type: String, enum: ['ASSIGNED', 'COMPLETED', 'FAILED'], default: 'ASSIGNED' }
+    status: { type: String, enum: ['ASSIGNED', 'COMPLETED', 'FAILED'], default: 'ASSIGNED' },
+    verifiedAt: { type: Date },
+    paidAt: { type: Date }
+  }],
+
+  // Digital Wallet (NEW)
+  wallet: {
+    balance: { type: Number, default: 0 },
+    totalEarned: { type: Number, default: 0 },
+    transactions: [{
+      type: { type: String, enum: ['CREDIT', 'DEBIT'], required: true },
+      amount: { type: Number, required: true },
+      campaignId: { type: mongoose.Schema.Types.ObjectId, ref: 'Campaign' },
+      provider: { type: String, enum: ['MTN', 'WAVE', 'PAYTECH'] },
+      description: { type: String },
+      externalId: { type: String },
+      timestamp: { type: Date, default: Date.now }
+    }]
+  },
+
+  // Gamification (NEW)
+  level: { 
+    type: String, 
+    enum: ['BRONZE', 'SILVER', 'GOLD', 'PLATINUM'], 
+    default: 'BRONZE' 
+  },
+  badges: [{ 
+    type: String,
+    enum: ['RAPID_RESPONSE', 'HIGH_PERFORMER', 'LOYALTY', 'TOP_INFLUENCER']
   }],
 
   joinedAt: { type: Date, default: Date.now }
