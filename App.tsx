@@ -8,6 +8,7 @@ import { BrandDashboard } from './pages/BrandDashboard';
 import { BecomeInfluencer } from './pages/BecomeInfluencer';
 import { Login } from './pages/Login';
 import { Legal } from './pages/Legal';
+import { ResetPassword } from './pages/ResetPassword';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Loader2 } from 'lucide-react';
@@ -72,15 +73,18 @@ const AppContent: React.FC = () => {
         return <Legal onNavigate={handleNavigate} />;
       case 'login':
         return <Login onSuccess={handleLoginSuccess} isRedirected={!!redirectAfterLogin} />;
+      case 'reset-password':
+        return <ResetPassword onSuccess={() => setCurrentPage('login')} />;
       default:
         return <Home onNavigate={handleNavigate} />;
     }
   };
 
-  // Specific check for login page to render without layout if needed, 
-  // but keeping it consistent is usually better. 
-  // Here we render Login full screen inside the switch or separately.
-  if (currentPage === 'login') {
+  // Specific check for login/reset pages to render without layout
+  if (currentPage === 'login' || currentPage === 'reset-password') {
+    if (currentPage === 'reset-password') {
+      return <ResetPassword onSuccess={() => setCurrentPage('login')} />;
+    }
     return <Login onSuccess={handleLoginSuccess} isRedirected={!!redirectAfterLogin} />;
   }
 

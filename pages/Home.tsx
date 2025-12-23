@@ -5,13 +5,23 @@ import {
   Plus, Minus, Activity, Martini, Music2, Mic2, Gem, Briefcase, CheckCircle2, 
   Target, Zap, Shield, Server, Database, XCircle, Eye, Calculator, FileText, 
   Lock, Fingerprint, Link as LinkIcon, GraduationCap, TrendingUp, Award,
-  BarChart3, DollarSign, Clock, Sparkles, Play, Image as ImageIcon
+  BarChart3, DollarSign, Clock, Sparkles, Play, Image as ImageIcon, 
+  MessageSquare, Bell, BarChart, TrendingDown, ArrowUpRight, Award as AwardIcon,
+  Coins, Timer, CheckCircle, XCircle as XCircleIcon, AlertCircle
 } from 'lucide-react';
 import { PACKAGES } from '../constants';
 import { useLanguage } from '../contexts/LanguageContext';
 import { HeroSection } from '../components/HeroSection';
 import { AnimatedBackground } from '../components/AnimatedBackground';
 import { FloatingElements } from '../components/FloatingElements';
+import { TrustBadges, SocialProof } from '../components/TrustBadges';
+import { CTAButton, FeatureList, TestimonialCard, StatCard } from '../components/ConversionElements';
+import { FeatureShowcase } from '../components/FeatureShowcase';
+import { ComparisonTable } from '../components/ComparisonTable';
+import { ProcessTimeline } from '../components/ProcessTimeline';
+import { SuccessMetrics } from '../components/SuccessMetrics';
+import { AnimatedCounter } from '../components/AnimatedCounter';
+import { GlowEffect } from '../components/GlowEffect';
 
 interface HomeProps {
   onNavigate: (page: string) => void;
@@ -26,7 +36,6 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
   const [activeCase, setActiveCase] = useState(0);
   const [isVisible, setIsVisible] = useState<Record<string, boolean>>({});
 
-  // Testimonial Backgrounds
   const testimonialBgs = [
     "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2032&auto=format&fit=crop", 
     "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop", 
@@ -37,12 +46,10 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // Testimonial Auto-rotate
     const testimonialInterval = setInterval(() => {
       setActiveTestimonial((prev) => (prev + 1) % 3);
     }, 5000);
 
-    // Intersection Observer for animations
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -82,12 +89,10 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
 
   const marqueeContent = [...partners, ...partners, ...partners];
 
-  // ROI Calculations
   const estReach = Math.floor(roiBudget / 5);
   const estConv = Math.floor(estReach * 0.015);
   const estRev = estConv * 15000;
 
-  // Holographic Icon Card Component
   const HoloCard = ({ icon, title, desc, onClick, className, colorClass, iconClass }: any) => {
     return (
       <div 
@@ -120,10 +125,56 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
     );
   };
 
+  const extendedFaq = [
+    { 
+      q: 'How quickly can I launch a campaign?', 
+      a: 'You can launch a campaign in under 2 minutes. Simply upload your creative, choose your package, and make payment. Our AI automatically matches you with the best influencers and deploys your campaign instantly via WhatsApp.' 
+    },
+    { 
+      q: 'How do you verify influencers?', 
+      a: 'Every influencer goes through a strict verification process. We check their follower count, engagement rates, and require proof of their audience. We also use AI to detect fake followers and bots. Only verified influencers with real engagement are approved.' 
+    },
+    { 
+      q: 'What payment methods do you accept?', 
+      a: 'We accept MTN Mobile Money, Moov Money, Wave, PayTech, and credit cards. All payments are processed securely with 256-bit SSL encryption. Your payment information is never stored on our servers.' 
+    },
+    { 
+      q: 'How do influencers get paid?', 
+      a: 'Influencers receive payment within 24 hours after campaign completion. Payments are made directly to their Mobile Money account (MTN, Moov, or Wave). The process is fully automated - no manual intervention needed.' 
+    },
+    { 
+      q: 'Can I track campaign performance in real-time?', 
+      a: 'Yes! Our dashboard provides real-time analytics including views, engagement, clicks, and conversions. You can see exactly how your campaign is performing as it happens, with detailed reports available for download.' 
+    },
+    { 
+      q: 'What happens if an influencer doesn\'t post?', 
+      a: 'We have a 100% completion guarantee. If an influencer fails to post, we automatically assign a replacement influencer at no extra cost. Our system tracks all posts and verifies completion before payment.' 
+    },
+    { 
+      q: 'Can I target specific locations?', 
+      a: 'Yes! You can target by city, neighborhood, or even specific areas. Our platform allows you to select influencers based on their location to ensure your message reaches the right audience.' 
+    },
+    { 
+      q: 'What\'s the minimum budget?', 
+      a: 'Our Starter package starts at just 15,000 XOF. This includes 5 verified influencers and is perfect for small businesses or testing the platform. No hidden fees, no contracts required.' 
+    },
+    { 
+      q: 'Do you offer refunds?', 
+      a: 'We offer a 100% satisfaction guarantee. If you\'re not happy with your campaign results, contact us within 7 days and we\'ll work with you to make it right or provide a full refund.' 
+    },
+    { 
+      q: 'How do I know my campaign is working?', 
+      a: 'You\'ll receive real-time notifications when influencers post your content. Our dashboard shows live metrics including reach, engagement, and conversions. You can also request detailed reports at any time.' 
+    },
+  ];
+
   return (
     <div className="text-white overflow-hidden bg-transparent relative">
       {/* Hero Section */}
       <HeroSection onNavigate={onNavigate} />
+
+      {/* Trust Badges */}
+      <TrustBadges />
 
       {/* Live Activity Section */}
       <section 
@@ -150,17 +201,14 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           </div>
           
           <div className="flex gap-8 text-center">
-            <div className="glass px-8 py-4 rounded-xl border border-white/5 hover:border-cyan-500/30 transition-colors">
-              <div className="text-3xl font-mono text-white tracking-tighter">42</div>
-              <div className="text-xs text-neutral-500 uppercase tracking-wider font-bold mt-1">Active Now</div>
-            </div>
-            <div className="glass px-8 py-4 rounded-xl border border-white/5 hover:border-cyan-500/30 transition-colors">
-              <div className="text-3xl font-mono text-cyan-400 tracking-tighter">12m</div>
-              <div className="text-xs text-neutral-500 uppercase tracking-wider font-bold mt-1">Avg Response</div>
-            </div>
+            <StatCard value={<AnimatedCounter value={42} />} label="Active Now" icon={<Activity className="text-cyan-400" size={24} />} color="cyan" />
+            <StatCard value="12m" label="Avg Response" icon={<Clock className="text-gold-500" size={24} />} color="gold" />
           </div>
         </div>
       </section>
+
+      {/* Social Proof */}
+      <SocialProof />
 
       {/* ROI Simulator */}
       <section 
@@ -175,7 +223,10 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               <h2 className="text-5xl md:text-6xl font-thin tracking-tighter mb-6 text-white">
                 {t('roi.title')}
               </h2>
-              <p className="text-neutral-400 text-lg mb-12">{t('roi.subtitle')}</p>
+              <p className="text-neutral-400 text-lg mb-4">{t('roi.subtitle')}</p>
+              <p className="text-neutral-500 text-sm mb-12">
+                Calculate your potential return on investment. Based on real campaign data from 850+ brands.
+              </p>
               
               <div className="mb-10">
                 <div className="flex justify-between mb-4">
@@ -195,14 +246,15 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                   onChange={(e) => setRoiBudget(parseInt(e.target.value))}
                   className="w-full h-2 bg-white/10 rounded-full appearance-none accent-gold-500 cursor-pointer"
                 />
+                <div className="flex justify-between text-xs text-neutral-600 mt-2">
+                  <span>15K XOF</span>
+                  <span>1M XOF</span>
+                </div>
               </div>
 
-              <button 
-                onClick={() => onNavigate('create')} 
-                className="bg-gradient-to-r from-gold-500 to-gold-400 text-black px-8 py-4 font-bold uppercase tracking-widest rounded-lg hover:shadow-[0_0_30px_rgba(234,179,8,0.5)] transition-all w-full md:w-auto"
-              >
-                {t('pricing.choose')}
-              </button>
+              <CTAButton onClick={() => onNavigate('create')} variant="primary">
+                Start Your Campaign
+              </CTAButton>
             </div>
 
             <div className="glass-panel border border-white/10 rounded-3xl p-8 relative shadow-2xl">
@@ -216,24 +268,27 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                     {t('roi.est_reach')}
                   </p>
                   <p className="text-4xl font-black text-cyan-400">
-                    {estReach.toLocaleString()} <span className="text-lg text-white font-thin">Views</span>
+                    <AnimatedCounter value={estReach} duration={1500} /> <span className="text-lg text-white font-thin">Views</span>
                   </p>
+                  <p className="text-xs text-neutral-600 mt-2">Based on average engagement rates</p>
                 </div>
                 <div className="glass p-6 rounded-2xl border border-white/5">
                   <p className="text-neutral-500 uppercase tracking-widest text-xs mb-2">
                     {t('roi.est_conv')}
                   </p>
                   <p className="text-4xl font-black text-purple-400">
-                    ~{estConv.toLocaleString()} <span className="text-lg text-white font-thin">Sales</span>
+                    ~<AnimatedCounter value={estConv} duration={1500} /> <span className="text-lg text-white font-thin">Sales</span>
                   </p>
+                  <p className="text-xs text-neutral-600 mt-2">1.5% average conversion rate</p>
                 </div>
                 <div className="bg-gradient-to-r from-gold-500/20 to-transparent p-6 rounded-2xl border border-gold-500/30">
                   <p className="text-gold-500 uppercase tracking-widest text-xs mb-2">
                     {t('roi.est_rev')}
                   </p>
                   <p className="text-5xl font-black text-white">
-                    {estRev.toLocaleString()} <span className="text-lg text-neutral-400 font-thin">XOF</span>
+                    <AnimatedCounter value={estRev} duration={2000} /> <span className="text-lg text-neutral-400 font-thin">XOF</span>
                   </p>
+                  <p className="text-xs text-neutral-600 mt-2">Based on 15,000 XOF average basket</p>
                 </div>
               </div>
               <p className="text-xs text-neutral-600 mt-6 text-center">
@@ -243,6 +298,15 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           </div>
         </div>
       </section>
+
+      {/* Feature Showcase */}
+      <FeatureShowcase />
+
+      {/* Success Metrics */}
+      <SuccessMetrics />
+
+      {/* Process Timeline */}
+      <ProcessTimeline />
 
       {/* Case Studies */}
       <section 
@@ -348,6 +412,9 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
         </div>
       </section>
 
+      {/* Comparison Table */}
+      <ComparisonTable />
+
       {/* Trust Protocol */}
       <section 
         className="py-24 bg-black relative"
@@ -399,47 +466,33 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-20">
-            {/* OLD WAY */}
             <div className="glass p-10 rounded-3xl border border-white/5 opacity-50 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
               <h3 className="text-xl font-bold text-neutral-500 mb-8 uppercase tracking-widest flex items-center gap-3">
                 <XCircle className="text-red-500"/> Old Marketing
               </h3>
-              <ul className="space-y-6">
-                <li className="flex items-start gap-4 text-neutral-400">
-                  <Minus className="text-red-500 mt-1" size={16}/> Unpredictable Algorithm Changes
-                </li>
-                <li className="flex items-start gap-4 text-neutral-400">
-                  <Minus className="text-red-500 mt-1" size={16}/> Bot Traffic & Fake Clicks
-                </li>
-                <li className="flex items-start gap-4 text-neutral-400">
-                  <Minus className="text-red-500 mt-1" size={16}/> Passive Scrolling (Banner Blindness)
-                </li>
-                <li className="flex items-start gap-4 text-neutral-400">
-                  <Minus className="text-red-500 mt-1" size={16}/> Low Trust Factor
-                </li>
-              </ul>
+              <FeatureList features={[
+                'Unpredictable Algorithm Changes',
+                'Bot Traffic & Fake Clicks',
+                'Passive Scrolling (Banner Blindness)',
+                'Low Trust Factor',
+                'Slow Setup (Days)',
+                'High Costs, Low ROI'
+              ]} icon={<XCircleIcon className="text-red-500" size={20} />} />
             </div>
 
-            {/* KWIK WAY */}
             <div className="glass-panel p-10 rounded-3xl border border-cyan-500/30 bg-cyan-900/10 relative overflow-hidden group hover:border-cyan-500 transition-colors shadow-[0_0_50px_rgba(6,182,212,0.1)]">
               <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
               <h3 className="text-xl font-bold text-white mb-8 uppercase tracking-widest flex items-center gap-3 relative z-10">
                 <CheckCircle2 className="text-cyan-400"/> KwikAds System
               </h3>
-              <ul className="space-y-6 relative z-10">
-                <li className="flex items-start gap-4 text-white font-medium">
-                  <Zap className="text-cyan-400 mt-1" size={16}/> Direct Push Notification Delivery
-                </li>
-                <li className="flex items-start gap-4 text-white font-medium">
-                  <Shield className="text-cyan-400 mt-1" size={16}/> 100% Verified Human Audience
-                </li>
-                <li className="flex items-start gap-4 text-white font-medium">
-                  <Eye className="text-cyan-400 mt-1" size={16}/> Active Engagement (Status Views)
-                </li>
-                <li className="flex items-start gap-4 text-white font-medium">
-                  <Users className="text-cyan-400 mt-1" size={16}/> High Trust (Friend Recommendation)
-                </li>
-              </ul>
+              <FeatureList features={[
+                'Direct Push Notification Delivery',
+                '100% Verified Human Audience',
+                'Active Engagement (Status Views)',
+                'High Trust (Friend Recommendation)',
+                'Instant Deployment (< 2 min)',
+                'Proven 340% Average ROI'
+              ]} icon={<CheckCircle className="text-cyan-400" size={20} />} />
             </div>
           </div>
         </div>
@@ -636,7 +689,11 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             <h2 className="text-5xl md:text-7xl font-thin text-white mb-6 tracking-tighter uppercase">
               {t('pricing.title')}
             </h2>
-            <p className="text-neutral-400 font-mono text-sm">{t('pricing.subtitle')}</p>
+            <p className="text-neutral-400 font-mono text-sm mb-4">{t('pricing.subtitle')}</p>
+            <p className="text-neutral-500 text-sm max-w-2xl mx-auto">
+              Choose the package that fits your needs. All packages include real-time analytics, 
+              verified influencers, and 24/7 support. No hidden fees, no contracts.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -683,18 +740,25 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                   ))}
                 </ul>
 
-                <button 
+                <CTAButton 
                   onClick={() => onNavigate('create')}
-                  className={`w-full py-5 text-xs font-black uppercase tracking-widest transition-all rounded-xl ${
-                    pkg.name === 'Growth' 
-                      ? 'bg-gold-500 text-black hover:bg-gold-400 hover:shadow-[0_0_20px_#eab308]' 
-                      : 'bg-white/5 text-white hover:bg-cyan-500 hover:text-black border border-white/10 hover:border-cyan-500'
-                  }`}
+                  variant={pkg.name === 'Growth' ? 'primary' : 'secondary'}
                 >
                   {t('pricing.choose')}
-                </button>
+                </CTAButton>
               </div>
             ))}
+          </div>
+
+          {/* Money Back Guarantee */}
+          <div className="mt-16 text-center glass-panel border border-green-500/30 p-8 rounded-2xl max-w-2xl mx-auto">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <Shield className="text-green-400" size={24} />
+              <h3 className="text-xl font-bold text-white">100% Satisfaction Guarantee</h3>
+            </div>
+            <p className="text-neutral-400">
+              Not happy with your campaign? Contact us within 7 days for a full refund. No questions asked.
+            </p>
           </div>
         </div>
       </section>
@@ -726,71 +790,45 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { 
-                q: t('testimonials.t1_quote'), 
-                a: t('testimonials.t1_author'), 
-                r: t('testimonials.t1_role'), 
-                img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop" 
-              },
-              { 
-                q: t('testimonials.t2_quote'), 
-                a: t('testimonials.t2_author'), 
-                r: t('testimonials.t2_role'), 
-                img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1000&auto=format&fit=crop" 
-              },
-              { 
-                q: t('testimonials.t3_quote'), 
-                a: t('testimonials.t3_author'), 
-                r: t('testimonials.t3_role'), 
-                img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop" 
-              },
-            ].map((tItem, i) => (
-              <div 
-                key={i} 
-                className="glass-panel border border-white/5 p-10 rounded-2xl hover:border-gold-500/30 transition-colors group"
-              >
-                <div className="flex gap-1 mb-6">
-                  {[1,2,3,4,5].map(s => (
-                    <Star key={s} size={12} className="text-gold-500 fill-gold-500"/>
-                  ))}
-                </div>
-                <p className="text-lg text-neutral-300 mb-8 font-light italic leading-relaxed">
-                  "{tItem.q}"
-                </p>
-                <div className="flex items-center gap-4 mt-auto">
-                  <img 
-                    src={tItem.img} 
-                    alt={tItem.a} 
-                    className="w-12 h-12 rounded-full border border-white/20 object-cover group-hover:border-gold-500 transition-colors"
-                  />
-                  <div>
-                    <div className="text-white font-bold">{tItem.a}</div>
-                    <div className="text-cyan-500 text-xs uppercase tracking-wider">{tItem.r}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
+            <TestimonialCard
+              quote={t('testimonials.t1_quote')}
+              author={t('testimonials.t1_author')}
+              role={t('testimonials.t1_role')}
+              company="Le Grill Cotonou"
+              rating={5}
+              image="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop"
+            />
+            <TestimonialCard
+              quote={t('testimonials.t2_quote')}
+              author={t('testimonials.t2_author')}
+              role={t('testimonials.t2_role')}
+              company="Glow Spa"
+              rating={5}
+              image="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1000&auto=format&fit=crop"
+            />
+            <TestimonialCard
+              quote={t('testimonials.t3_quote')}
+              author={t('testimonials.t3_author')}
+              role={t('testimonials.t3_role')}
+              company="Event Architect"
+              rating={5}
+              image="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop"
+            />
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* Extended FAQ */}
       <section 
-        className="py-24 max-w-3xl mx-auto px-6"
+        className="py-24 max-w-4xl mx-auto px-6"
         data-animate
         id="faq"
       >
         <h2 className="text-4xl font-thin mb-12 text-center tracking-tighter uppercase">
-          {t('faq.title')}
+          Frequently Asked Questions
         </h2>
         <div className="space-y-4">
-          {[
-            { q: t('faq.q1'), a: t('faq.a1') },
-            { q: t('faq.q2'), a: t('faq.a2') },
-            { q: t('faq.q3'), a: t('faq.a3') },
-            { q: t('faq.q4'), a: t('faq.a4') },
-          ].map((item, i) => (
+          {extendedFaq.map((item, i) => (
             <div 
               key={i} 
               className="group glass border border-white/5 rounded-xl px-8 transition-all hover:border-cyan-500/30 backdrop-blur-md"
@@ -799,11 +837,11 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                 onClick={() => toggleFaq(i)}
                 className="w-full flex items-center justify-between py-6 text-left group-hover:text-cyan-400 transition-colors"
               >
-                <span className="font-bold text-base md:text-lg">{item.q}</span>
+                <span className="font-bold text-base md:text-lg pr-8">{item.q}</span>
                 {openFaq === i ? <Minus size={16} /> : <Plus size={16} />}
               </button>
               <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                openFaq === i ? 'max-h-40 pb-6 opacity-100' : 'max-h-0 opacity-0'
+                openFaq === i ? 'max-h-96 pb-6 opacity-100' : 'max-h-0 opacity-0'
               }`}>
                 <p className="text-neutral-400 leading-relaxed font-light text-sm">{item.a}</p>
               </div>
@@ -815,16 +853,22 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       {/* Footer CTA */}
       <section className="py-24 relative overflow-hidden flex items-center justify-center text-center px-6 bg-gradient-to-r from-gold-600 to-amber-700">
         <div className="absolute inset-0 bg-black/10"></div>
-        <div className="relative z-10">
+        <div className="relative z-10 max-w-4xl mx-auto">
           <h2 className="text-6xl md:text-9xl font-black text-white mb-8 tracking-tighter uppercase leading-[0.8] drop-shadow-2xl">
-            Global Scale.<br/>Local Roots.
+            Ready to <br/>Dominate?
           </h2>
-          <button 
-            onClick={() => onNavigate('create')}
-            className="px-20 py-8 bg-black text-white text-sm font-bold uppercase tracking-widest hover:scale-105 transition-transform shadow-2xl border border-white/20 hover:border-gold-500"
-          >
-            {t('hero.cta_start')}
-          </button>
+          <p className="text-xl text-white/90 mb-12 max-w-2xl mx-auto">
+            Join 850+ brands already using KwikAds to reach millions of customers. 
+            Start your first campaign in under 2 minutes.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <CTAButton onClick={() => onNavigate('create')} variant="primary" className="text-lg py-6">
+              Launch Your Campaign
+            </CTAButton>
+            <CTAButton onClick={() => onNavigate('influencer')} variant="outline" className="text-lg py-6">
+              Become an Influencer
+            </CTAButton>
+          </div>
         </div>
       </section>
     </div>

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth, UserRole } from '../contexts/AuthContext';
-import { Loader2, ArrowRight, ShieldCheck, Zap, Lock, AlertCircle, Sparkles, Eye, EyeOff, Terminal } from 'lucide-react';
+import { Loader2, ArrowRight, ShieldCheck, Zap, Lock, AlertCircle, Sparkles, Eye, EyeOff, Terminal, Mail, User, KeyRound } from 'lucide-react';
 import { AnimatedBackground } from '../components/AnimatedBackground';
 import { GlowEffect } from '../components/GlowEffect';
+import { ForgotPassword } from './ForgotPassword';
 
 interface LoginProps {
   onSuccess: () => void;
@@ -10,12 +11,14 @@ interface LoginProps {
 }
 
 export const Login: React.FC<LoginProps> = ({ onSuccess, isRedirected }) => {
-  const { login } = useAuth();
+  const { login, signUp } = useAuth();
   const [loading, setLoading] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [role, setRole] = useState<UserRole>('BRAND');
   const [formData, setFormData] = useState({ email: '', password: '', name: '' });
+  const [error, setError] = useState<string | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
 
   useEffect(() => {
@@ -31,21 +34,35 @@ export const Login: React.FC<LoginProps> = ({ onSuccess, isRedirected }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     setLoading(true);
+
     try {
-      await login(formData.email, role);
+      if (isRegistering) {
+        if (!formData.name.trim()) {
+          setError('Name is required');
+          return;
+        }
+        await signUp(formData.email, formData.password, formData.name, role);
+      } else {
+        await login(formData.email, formData.password, role);
+      }
       onSuccess();
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+      setError(err.message || 'Authentication failed. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
+  if (showForgotPassword) {
+    return <ForgotPassword onBack={() => setShowForgotPassword(false)} onSuccess={onSuccess} />;
+  }
+
   const roles = [
-    { id: 'BRAND' as UserRole, label: 'BRAND', icon: <Zap size={16} />, color: 'gold' },
-    { id: 'INFLUENCER' as UserRole, label: 'INFLUENCER', icon: <Sparkles size={16} />, color: 'cyan' },
-    { id: 'ADMIN' as UserRole, label: 'ADMIN', icon: <Terminal size={16} />, color: 'purple' },
+    { id: 'BRAND' as UserRole, label: 'BRAND', icon: <Zap size={16} />, color: 'gold', desc: 'Launch Campaigns' },
+    { id: 'INFLUENCER' as UserRole, label: 'INFLUENCER', icon: <Sparkles size={16} />, color: 'cyan', desc: 'Earn Money' },
+    { id: 'ADMIN' as UserRole, label: 'ADMIN', icon: <Terminal size={16} />, color: 'purple', desc: 'Manage Platform' },
   ];
 
   return (
@@ -88,19 +105,19 @@ export const Login: React.FC<LoginProps> = ({ onSuccess, isRedirected }) => {
             </span>
           </h1>
           
-          <p className="text-neutral-300 text-lg leading-relaxed border-l-4 border-gold-500 pl-6 drop-shadow-md">
+          <p className="text-neutral-300 text-lg leading-relaxed border-l-4 border-gold-500 pl-6 drop-shadow-md mb-8">
             Welcome back to the operating system of local influence. Manage campaigns, track velocity, and scale your reach.
           </p>
 
-          <div className="mt-12 flex items-center gap-6">
+          <div className="grid grid-cols-3 gap-4">
             {[
               { icon: <ShieldCheck size={20} className="text-cyan-400" />, text: '256-Bit SSL' },
               { icon: <Zap size={20} className="text-gold-500" />, text: 'Lightning Fast' },
               { icon: <Lock size={20} className="text-purple-400" />, text: 'Secure' },
             ].map((feature, i) => (
-              <div key={i} className="flex items-center gap-2 text-neutral-400">
-                {feature.icon}
-                <span className="text-xs uppercase tracking-widest">{feature.text}</span>
+              <div key={i} className="text-center glass p-4 rounded-xl border border-white/10">
+                <div className="flex justify-center mb-2">{feature.icon}</div>
+                <span className="text-xs uppercase tracking-widest text-neutral-400">{feature.text}</span>
               </div>
             ))}
           </div>
@@ -141,11 +158,11 @@ export const Login: React.FC<LoginProps> = ({ onSuccess, isRedirected }) => {
                   <Terminal className="text-cyan-400" size={20} />
                 </div>
                 <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight">
-                  {isRegistering ? 'Initialize Account' : 'Secure Login'}
+                  {isRegistering ? 'Create Account' : 'Secure Login'}
                 </h2>
               </div>
               <p className="text-cyan-500 text-sm uppercase tracking-widest font-mono">
-                Authentication Required
+                {isRegistering ? 'Join the Revolution' : 'Authentication Required'}
               </p>
             </div>
 
@@ -155,14 +172,15 @@ export const Login: React.FC<LoginProps> = ({ onSuccess, isRedirected }) => {
                 <button
                   key={r.id}
                   onClick={() => setRole(r.id)}
-                  className={`flex-1 py-3 text-xs font-bold uppercase tracking-widest rounded transition-all flex items-center justify-center gap-2 ${
+                  className={`flex-1 py-3 text-xs font-bold uppercase tracking-widest rounded transition-all flex flex-col items-center justify-center gap-1 ${
                     role === r.id 
                       ? `bg-gradient-to-r from-${r.color}-500 to-${r.color}-400 text-black shadow-lg scale-105` 
                       : 'text-neutral-500 hover:text-white hover:bg-white/5'
                   }`}
                 >
                   {r.icon}
-                  {r.label}
+                  <span>{r.label}</span>
+                  <span className="text-[10px] normal-case opacity-75">{r.desc}</span>
                 </button>
               ))}
             </div>
@@ -170,11 +188,13 @@ export const Login: React.FC<LoginProps> = ({ onSuccess, isRedirected }) => {
             <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
               {isRegistering && (
                 <div className="group">
-                  <label className="text-xs font-bold uppercase text-neutral-500 tracking-wider mb-2 block">
-                    FULL NAME
+                  <label className="text-xs font-bold uppercase text-neutral-500 tracking-wider mb-2 block flex items-center gap-2">
+                    <User size={14} />
+                    Full Name
                   </label>
                   <input 
                     type="text" 
+                    required
                     placeholder="Enter your full name"
                     className="w-full glass border border-white/10 py-4 px-5 text-white placeholder-neutral-600 focus:border-cyan-500 outline-none transition-all rounded-xl focus:bg-white/10 focus:shadow-[0_0_20px_rgba(6,182,212,0.2)]"
                     value={formData.name}
@@ -184,11 +204,13 @@ export const Login: React.FC<LoginProps> = ({ onSuccess, isRedirected }) => {
               )}
               
               <div className="group">
-                <label className="text-xs font-bold uppercase text-neutral-500 tracking-wider mb-2 block">
-                  ACCESS ID (EMAIL)
+                <label className="text-xs font-bold uppercase text-neutral-500 tracking-wider mb-2 block flex items-center gap-2">
+                  <Mail size={14} />
+                  Email Address
                 </label>
                 <input 
                   type="email" 
+                  required
                   placeholder="your@email.com"
                   className="w-full glass border border-white/10 py-4 px-5 text-white placeholder-neutral-600 focus:border-cyan-500 outline-none transition-all rounded-xl focus:bg-white/10 focus:shadow-[0_0_20px_rgba(6,182,212,0.2)]"
                   value={formData.email}
@@ -197,12 +219,14 @@ export const Login: React.FC<LoginProps> = ({ onSuccess, isRedirected }) => {
               </div>
               
               <div className="group">
-                <label className="text-xs font-bold uppercase text-neutral-500 tracking-wider mb-2 block">
-                  PASSPHRASE
+                <label className="text-xs font-bold uppercase text-neutral-500 tracking-wider mb-2 block flex items-center gap-2">
+                  <KeyRound size={14} />
+                  Password
                 </label>
                 <div className="relative">
                   <input 
                     type={showPassword ? "text" : "password"} 
+                    required
                     placeholder="••••••••"
                     className="w-full glass border border-white/10 py-4 px-5 pr-12 text-white placeholder-neutral-600 focus:border-cyan-500 outline-none transition-all rounded-xl focus:bg-white/10 focus:shadow-[0_0_20px_rgba(6,182,212,0.2)]"
                     value={formData.password}
@@ -218,6 +242,32 @@ export const Login: React.FC<LoginProps> = ({ onSuccess, isRedirected }) => {
                 </div>
               </div>
 
+              {!isRegistering && (
+                <div className="flex items-center justify-between">
+                  <label className="flex items-center gap-2 text-xs text-neutral-500">
+                    <input type="checkbox" className="rounded border-white/20" />
+                    <span>Remember me</span>
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setShowForgotPassword(true)}
+                    className="text-xs text-cyan-400 hover:text-cyan-300 transition-colors uppercase tracking-wider"
+                  >
+                    Forgot Password?
+                  </button>
+                </div>
+              )}
+
+              {error && (
+                <div className="p-4 bg-red-900/20 border border-red-500/50 rounded-xl flex items-start gap-3 text-red-400 animate-scale-in">
+                  <AlertCircle size={20} className="shrink-0" />
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-wider mb-1">Error</p>
+                    <p className="text-sm">{error}</p>
+                  </div>
+                </div>
+              )}
+
               <GlowEffect color="gold" intensity="medium">
                 <button 
                   type="submit" 
@@ -228,7 +278,7 @@ export const Login: React.FC<LoginProps> = ({ onSuccess, isRedirected }) => {
                     <Loader2 className="animate-spin"/>
                   ) : (
                     <>
-                      {isRegistering ? 'Create Access' : 'Authenticate'} 
+                      {isRegistering ? 'Create Account' : 'Authenticate'} 
                       <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"/>
                     </>
                   )}
@@ -238,10 +288,13 @@ export const Login: React.FC<LoginProps> = ({ onSuccess, isRedirected }) => {
 
             <div className="mt-8 text-center relative z-10">
               <button 
-                onClick={() => setIsRegistering(!isRegistering)}
+                onClick={() => {
+                  setIsRegistering(!isRegistering);
+                  setError(null);
+                }}
                 className="text-xs text-neutral-500 hover:text-cyan-400 transition-colors uppercase tracking-widest"
               >
-                {isRegistering ? 'Already have an ID? Login' : 'New to KwikAds? Apply for Access'}
+                {isRegistering ? 'Already have an account? Login' : 'New to KwikAds? Create Account'}
               </button>
             </div>
 
