@@ -24,6 +24,7 @@ const generateMockInfluencers = (count: number) => Array.from({ length: count })
   followers: 500 + Math.floor(Math.random() * 10000),
   earnings: Math.floor(Math.random() * 200000),
   status: i % 5 === 0 ? 'PENDING' : 'ACTIVE',
+  active: i % 5 !== 0, // true for most, false for pending
   trust: 85 + Math.floor(Math.random() * 15),
   profileLink: 'https://instagram.com/user',
   metrics: { avgViews: 500 + i * 20 }

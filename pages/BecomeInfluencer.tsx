@@ -76,7 +76,12 @@ export const BecomeInfluencer: React.FC = () => {
 
     setLoading(true);
     try {
-      await api.registerInfluencer(formData);
+      // Convert null to undefined for proofFile
+      const submitData = {
+        ...formData,
+        proofFile: formData.proofFile || undefined
+      };
+      await api.registerInfluencer(submitData);
       setSubmitted(true);
       window.scrollTo(0,0);
     } catch (err) {
